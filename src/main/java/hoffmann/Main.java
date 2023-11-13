@@ -34,8 +34,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner bob = new Scanner(System.in);
+    private static void playGame(Scanner bob) {
         User player = new User();
 
         // Ask for Name
@@ -61,6 +60,21 @@ public class Main {
         } else {
             System.out.println(String.format("The winner is %s!", winner.getName()));
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner bob = new Scanner(System.in);
+
+        Boolean keepPlaying;
+
+        do {
+            playGame(bob);
+
+            System.out.println("Do you want to play again?  Type 'y' to keep playing or anything else to quit.");
+            String choice = bob.nextLine();
+            keepPlaying = choice.equals("y");
+
+        } while(keepPlaying);
 
         bob.close();
     }
