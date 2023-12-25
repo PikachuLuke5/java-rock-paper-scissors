@@ -1,64 +1,76 @@
 package hoffmann;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    private static Long SEED = System.currentTimeMillis();
-    private static Random RNG = new Random(SEED);
+    private static List<Player> pickWinner(List<Player> players) {
 
-    private static String computerChoice() {
-        Integer choice = RNG.nextInt(3);
+        List<Player> winners = new ArrayList<>(players);
+        for (Player p1 : players) {
 
-        if (choice == 0) {
-            return "r";
-        } else if (choice == 1) {
-            return "p";
-        } else {
-            return "s";
+            for (Player p2 : players) {
+
+                if ((p1.choice.equals("r") && p2.choice.equals("p")) ||
+                        (p1.choice.equals("p") && p2.choice.equals("s")) ||
+                        (p1.choice.equals("s") && p2.choice.equals("r"))) {
+                    winners.remove(p1);
+                }
+            }
         }
-    }
-
-    private static User pickWinner(User u1, User u2) {
-        if (u1.getChoice().equals(u2.getChoice())) {
-            return null;
-        } else if (u1.getChoice().equals("s") && u2.getChoice().equals("p")) {
-            return u1;
-        } else if (u1.getChoice().equals("p") && u2.getChoice().equals("r")) {
-            return u1;
-        } else if (u1.getChoice().equals("r") && u2.getChoice().equals("s")) {
-            return u1;
-        } else {
-            return u2;
-        }
+        return winners;
     }
 
     private static void playGame(Scanner bob) {
-        User player = new User();
 
-        // Ask for Name
-        System.out.println("What is your name?");
-        String name = bob.nextLine();
-        player.setName(name);
+        // Ask how many computer players
+        System.out.println("How many computer players do you want?");
+        Integer numOfComps = Integer.parseInt(bob.nextLine());
 
-        // Rock, Paper, Scissors
-        System.out.println("Rock, paper or scissors?  Please put the first letter.");
-        String choice = bob.nextLine();
-        player.setChoice(choice);
+        System.out.println("How many human players do you want?");
+        Integer numOfHumans = Integer.parseInt(bob.nextLine());
+
+        // Create list of players, add the human player to it
+        List<Player> players = new ArrayList<>();
+
+        for (Integer i = 0; i < numOfHumans; i++) {
+            Player player = new Player();
+
+            // Ask for Name
+            System.out.println(String.format("Player %s, what is your name?", Integer.toString(i+1)));
+            String name = bob.nextLine();
+            player.setName(name);
+
+            // Rock, Paper, Scissors
+            System.out.println("Rock, paper or scissors?  Please put the first letter.");
+            String choice = bob.nextLine();
+            player.setChoice(choice);
+
+            players.add(player);
+        }
 
         // Computer chooses Rock, Paper, Scissors
-        User compy = new User("Compy", computerChoice());
+        // Counting for loop / Incrementing for loop
+        for (Integer i = 0; i < numOfComps; i++) {
+            Player compy = new ComputerPlayer();
+            players.add(compy);
+        }
+
+        for (Player p : players){
+            System.out.println(p);
+        }
 
         // Decide who wins
-        System.out.println(player);
-        System.out.println(compy);
-
-        User winner = pickWinner(player, compy);
-        if (winner == null) {
+        List<Player> winners = pickWinner(players);
+        if (winners.isEmpty() || winners.size() == players.size()) {
             System.out.println("It is a tie!");
         } else {
-            System.out.println(String.format("The winner is %s!", winner.getName()));
+            System.out.println("The winners are...");
+            for (Player p : winners) {
+                System.out.println(p.getName());
+            }
         }
     }
 
@@ -74,7 +86,7 @@ public class Main {
             String choice = bob.nextLine();
             keepPlaying = choice.equals("y");
 
-        } while(keepPlaying);
+        } while (keepPlaying);
 
         bob.close();
     }

@@ -1,15 +1,15 @@
 package hoffmann;
 
-public class User {
+public class Player {
     String name;
     String choice;
 
     // Constructors
-    User() {
+    Player() {
 
     }
     
-    User(String name, String choice) {
+    Player(String name, String choice) {
         this.name = name;
         this.choice = choice;
     }
