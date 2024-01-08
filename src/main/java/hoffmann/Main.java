@@ -1,5 +1,6 @@
 package hoffmann;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -39,14 +40,24 @@ public class Main {
             Player player = new Player();
 
             // Ask for Name
-            System.out.println(String.format("Player %s, what is your name?", Integer.toString(i+1)));
+            System.out.println(String.format("Player %s, what is your name?", Integer.toString(i + 1)));
             String name = bob.nextLine();
             player.setName(name);
 
-            // Rock, Paper, Scissors
-            System.out.println("Rock, paper or scissors?  Please put the first letter.");
-            String choice = bob.nextLine();
-            player.setChoice(choice);
+            String choice;
+            Boolean valid;
+            do {
+                try {
+                    // Rock, Paper, Scissors
+                    System.out.println("Rock, paper or scissors?  Please put the first letter.");
+                    choice = bob.nextLine();
+                    player.setChoice(GameChoice.getChoice(choice));
+                    valid = true;
+                } catch (InvalidParameterException e) {
+                    System.out.println(e.getMessage());
+                    valid = false;
+                }
+            } while (!valid);
 
             players.add(player);
         }
@@ -58,7 +69,7 @@ public class Main {
             players.add(compy);
         }
 
-        for (Player p : players){
+        for (Player p : players) {
             System.out.println(p);
         }
 

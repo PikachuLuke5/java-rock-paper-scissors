@@ -2,14 +2,14 @@ package hoffmann;
 
 public class Player {
     String name;
-    String choice;
+    GameChoice choice;
 
     // Constructors
     Player() {
 
     }
     
-    Player(String name, String choice) {
+    Player(String name, GameChoice choice) {
         this.name = name;
         this.choice = choice;
     }
@@ -24,11 +24,11 @@ public class Player {
         this.name = name;
     }
 
-    public String getChoice() {
+    public GameChoice getChoice() {
         return this.choice;
     }
 
-    public void setChoice(String choice) {
+    public void setChoice(GameChoice choice) {
         this.choice = choice;
     }
 

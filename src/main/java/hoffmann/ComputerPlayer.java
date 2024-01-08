@@ -14,13 +14,7 @@ public class ComputerPlayer extends Player {
 
         Integer choice = RNG.nextInt(3);
 
-        if (choice == 0) {
-            this.choice = "r";
-        } else if (choice == 1) {
-            this.choice = "p";
-        } else {
-            this.choice = "s";
-        }
+        this.choice = GameChoice.values()[choice];
     }
 
 }
