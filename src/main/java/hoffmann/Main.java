@@ -14,9 +14,9 @@ public class Main {
 
             for (Player p2 : players) {
 
-                if ((p1.choice.equals("r") && p2.choice.equals("p")) ||
-                        (p1.choice.equals("p") && p2.choice.equals("s")) ||
-                        (p1.choice.equals("s") && p2.choice.equals("r"))) {
+                if ((p1.choice.equals(GameChoice.ROCK) && p2.choice.equals(GameChoice.PAPER)) ||
+                        (p1.choice.equals(GameChoice.PAPER) && p2.choice.equals(GameChoice.SCISSORS)) ||
+                        (p1.choice.equals(GameChoice.SCISSORS) && p2.choice.equals(GameChoice.ROCK))) {
                     winners.remove(p1);
                 }
             }
